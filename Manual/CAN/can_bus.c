@@ -1,7 +1,8 @@
 /**
   ******************************************************************************
   * @file           : can_bus.c
-  * @brief          : Source file of can bus peripherals
+  * @brief          : Source file of can bus peripherals and functions
+  * @peripherals	: CAN (PB8, PB9)
   ******************************************************************************
   * @attention
   *
@@ -10,6 +11,11 @@
   *
   ******************************************************************************
   */
-#include "can.h"
+#include "can_bus.h"
 
+void can_bus_init(void)
+{
+	  MX_CAN_Init();
+}
 
+/*TODO create write and read functions*/

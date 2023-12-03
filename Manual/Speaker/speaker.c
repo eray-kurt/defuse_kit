@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file           : demister.c
-  * @brief          : Source file of demister peripherals and functions
-  * @peripherals	: GPIO (PB2)
+  * @file           : speaker.c
+  * @brief          : Source file of speaker peripherals and functions
+  * @peripherals	: SPI (PB13, PB14, PB15) | GPIO (PB12)
   ******************************************************************************
   * @attention
   *
@@ -11,12 +11,4 @@
   *
   ******************************************************************************
   */
-
-#include "demister.h"
-
-void demister_init(void)
-{
- /*no init since gpio inited at main*/
-}
-
-/*TODO create demister_write function*/
+#include "speaker.h"

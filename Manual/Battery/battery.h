@@ -1,7 +1,8 @@
 /**
   ******************************************************************************
   * @file           : battery.h
-  * @brief          : Header file of battery peripherals
+  * @brief          : Header file of battery peripherals and functions
+  * @peripherals	: ADC2_IN3 (PA3) | ADC2_IN4 (PA4)
   ******************************************************************************
   * @attention
   *
@@ -14,18 +15,9 @@
 #define BATTERY_HEADER
 #include "adc.h"
 
-ADC_HandleTypeDef* batteryOps;
-ADC_HandleTypeDef* batteryUps;
+/*ADC_HandleTypeDef* batteryOps = &hadc1;*/
+/*ADC_HandleTypeDef* batteryUps = &hadc2;*/
 
 void battery_init(void);
-
-
-
-
-
-
-
-
-
 
 #endif /*BATTERY_HEADER END*/
