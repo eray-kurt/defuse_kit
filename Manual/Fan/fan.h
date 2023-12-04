@@ -16,15 +16,8 @@
 #define FAN_HEADER
 #include "tim.h"
 
+void fan_init(void);
 
-
-
-
-
-
-
-
-
-
+void fan_set_pwm(uint16_t speed);
 
 #endif /*FAN_HEADER END*/

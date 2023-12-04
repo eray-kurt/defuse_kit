@@ -17,14 +17,6 @@
 #include "tim.h"
 
 void led_init();
-
-
-
-
-
-
-
-
-
+void led_set_pwm(uint16_t pwm);
 
 #endif /*LED_HEADER END*/

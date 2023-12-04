@@ -13,3 +13,14 @@
   */
 
 #include "fan.h"
+uint32_t* FAN_1_REGISTER = &TIM1->CCR1;
+uint32_t* FAN_2_REGISTER = &TIM1->CCR2;
+void fan_init(void)
+{
+	/*No Timer Init Timer has inited at main*/
+}
+
+void fan_set_pwm(uint16_t speed)
+{
+
+}

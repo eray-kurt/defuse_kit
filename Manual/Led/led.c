@@ -12,3 +12,14 @@
   ******************************************************************************
   */
 #include "led.h"
+uint32_t* LED_1_REGISTER = &TIM1->CCR3;
+uint32_t* LED_2_REGISTER = &TIM1->CCR4;
+void led_init(void)
+{
+
+}
+
+void led_set_pwm(uint16_t pwm)
+{
+
+}

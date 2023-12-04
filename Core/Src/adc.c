@@ -86,7 +86,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     PA3     ------> ADC2_IN3
     PA4     ------> ADC2_IN4
     */
-    GPIO_InitStruct.Pin = BATTERY_OPS_Pin|BATTERY_UPS_Pin;
+    GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -111,7 +111,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     PA3     ------> ADC2_IN3
     PA4     ------> ADC2_IN4
     */
-    HAL_GPIO_DeInit(GPIOA, BATTERY_OPS_Pin|BATTERY_UPS_Pin);
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_3|GPIO_PIN_4);
 
   /* USER CODE BEGIN ADC2_MspDeInit 1 */
 
