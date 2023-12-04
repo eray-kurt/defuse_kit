@@ -16,7 +16,6 @@
 #define CAN_HEADER
 #include "can.h"
 
-CAN_HandleTypeDef* can_bus_handle = &hcan; /*handler for can bus to use in functions*/
 void can_bus_init(void);
 
 #endif /*CAN_HEADER END*/

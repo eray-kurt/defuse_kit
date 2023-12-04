@@ -18,6 +18,6 @@
 
 void fan_init(void);
 
-void fan_set_pwm(uint16_t speed);
+void fan_set_pwm(uint16_t pwm);
 
 #endif /*FAN_HEADER END*/

@@ -15,6 +15,7 @@
   *
   ******************************************************************************
   */
+#include "defuseKitMgr.h"
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -67,7 +68,7 @@ void MX_FREERTOS_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	defuseKitMgr_init();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/

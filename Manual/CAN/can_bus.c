@@ -13,6 +13,7 @@
   */
 #include "can_bus.h"
 
+CAN_HandleTypeDef* can_bus_handle = &hcan; /*handler for can bus to use in functions*/
 void can_bus_init(void)
 {
 	  MX_CAN_Init();

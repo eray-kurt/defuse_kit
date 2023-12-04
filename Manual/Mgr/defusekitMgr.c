@@ -15,6 +15,12 @@
 void defuseKitMgr_init(void)
 {
 	/*TODO create necessary peripherals and tasks*/
+	battery_init();
+	can_bus_init();
+	demister_init();
+	fan_init();
+	led_init();
+	speaker_init();
 	/*TODO set default values or get them from flash*/
 	/*TODO start the tasks*/
 }

@@ -12,8 +12,16 @@
   */
 #ifndef DEFUSEKITMGR_HEADER
 #define DEFUSEKITMGR_HEADER
+
 #include "main.h"
 #include "common.h"
+#include "battery.h"
+#include "can_bus.h"
+#include "demister.h"
+#include "fan.h"
+#include "led.h"
+#include "speaker.h"
+
 void defuseKitMgr_init(void);
 
 void defuseKitMgr_readTask(void);

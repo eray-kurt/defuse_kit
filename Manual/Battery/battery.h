@@ -19,10 +19,10 @@
 
 void battery_init(void);
 
-uint32_t battery_voltage_read(void);
+float battery_voltage_read(void);
 
-uint32_t ops_battery_read(void);
+float ops_battery_read(void);
 
-uint32_t ups_battery_read(void);
+float ups_battery_read(void);
 
 #endif /*BATTERY_HEADER END*/

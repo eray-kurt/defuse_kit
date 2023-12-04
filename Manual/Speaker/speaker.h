@@ -15,5 +15,6 @@
 #define SPEAKER_HEADER
 #include "spi.h"
 
+void speaker_init(void);
 
 #endif /*SPEAKER_HEADER END*/

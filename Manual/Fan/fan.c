@@ -20,7 +20,7 @@ void fan_init(void)
 	/*No Timer Init Timer has inited at main*/
 }
 
-void fan_set_pwm(uint16_t speed)
+void fan_set_pwm(uint16_t pwm)
 {
 
 }
