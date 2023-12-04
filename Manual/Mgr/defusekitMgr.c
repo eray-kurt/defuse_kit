@@ -1,8 +1,7 @@
 /**
   ******************************************************************************
-  * @file           : demister.h
-  * @brief          : Header file of demister peripherals and functions
-  * @peripherals	: GPIO (PB2)
+  * @file           : defuseKitMgr.c
+  * @brief          : Source file of defuse kit manager
   ******************************************************************************
   * @attention
   *
@@ -11,14 +10,4 @@
   *
   ******************************************************************************
   */
-
-#ifndef DEMISTER_HEADER
-#define DEMISTER_HEADER
-
-#include "gpio.h"
-#include "main.h"
-
-void demister_init(void);
-void demister_open(void);
-void demister_close(void);
-#endif /*DEMISTER_HEADER END*/
+#include "defusekitMgr.h"

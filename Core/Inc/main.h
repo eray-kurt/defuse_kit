@@ -57,6 +57,22 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define BATTERY_OPS_Pin GPIO_PIN_3
+#define BATTERY_OPS_GPIO_Port GPIOA
+#define BATTERY_UPS_Pin GPIO_PIN_4
+#define BATTERY_UPS_GPIO_Port GPIOA
+#define DEMISTER_Pin GPIO_PIN_2
+#define DEMISTER_GPIO_Port GPIOB
+#define SPEAKER_Pin GPIO_PIN_12
+#define SPEAKER_GPIO_Port GPIOB
+#define FAN1_Pin GPIO_PIN_8
+#define FAN1_GPIO_Port GPIOA
+#define FAN2_Pin GPIO_PIN_9
+#define FAN2_GPIO_Port GPIOA
+#define LED1_Pin GPIO_PIN_10
+#define LED1_GPIO_Port GPIOA
+#define LED2_Pin GPIO_PIN_11
+#define LED2_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 
