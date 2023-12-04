@@ -16,8 +16,13 @@
 #include "adc.h"
 
 /*ADC_HandleTypeDef* batteryOps = &hadc1;*/
-/*ADC_HandleTypeDef* batteryUps = &hadc2;*/
 
 void battery_init(void);
+
+uint32_t battery_voltage_read(void);
+
+uint32_t ops_battery_read(void);
+
+uint32_t ups_battery_read(void);
 
 #endif /*BATTERY_HEADER END*/
