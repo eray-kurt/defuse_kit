@@ -28,26 +28,31 @@ void defuseKitMgr_init(void)
 
 void defuseKitMgr_readTask(void)
 {
-	while(1)
+	for(;;)
 	{
 		/*TODO read from CAN bus and set variables*/
+		osDelay(1);
+	}
+}
+
+void defuseKitMgr_mgrTask(void)
+{
+	for(;;)
+	{
+		/*TODO manage states and variables*/
+		osDelay(1);
 	}
 }
 
 void defuseKitMgr_writeTask(void)
 {
-	while(1)
+	int i = 0;
+	uint32_t rpmspeed = 0;
+	for(;;)
 	{
 		/*TODO read variables and write to CAN bus & others*/
 	}
 }
 
-void defuseKitMgr_managerTask(void)
-{
-	while(1)
-	{
-		/*TODO manage states and variables*/
-	}
-}
 
 /*NOTE: this structure can be changed, let it settle for now 04.12*/

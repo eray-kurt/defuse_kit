@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "defuseKitMgr.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,14 +47,18 @@
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
-osThreadId defaultTaskHandle;
+osThreadId defuseKitMgr_readTaskHandle;
+osThreadId defuseKitMgr_mgrTaskHandle;
+osThreadId defuseKitMgr_writeTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
 /* USER CODE END FunctionPrototypes */
 
-void StartDefaultTask(void const * argument);
+void dkm_readTask(void const * argument);
+void dkm_mgrTask(void const * argument);
+void dkm_writeTask(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -101,9 +105,17 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  /* definition and creation of defuseKitMgr_readTask */
+  osThreadDef(defuseKitMgr_readTask, dkm_readTask, osPriorityRealtime, 0, 128);
+  defuseKitMgr_readTaskHandle = osThreadCreate(osThread(defuseKitMgr_readTask), NULL);
+
+  /* definition and creation of defuseKitMgr_mgrTask */
+  osThreadDef(defuseKitMgr_mgrTask, dkm_mgrTask, osPriorityNormal, 0, 128);
+  defuseKitMgr_mgrTaskHandle = osThreadCreate(osThread(defuseKitMgr_mgrTask), NULL);
+
+  /* definition and creation of defuseKitMgr_writeTask */
+  osThreadDef(defuseKitMgr_writeTask, dkm_writeTask, osPriorityLow, 0, 128);
+  defuseKitMgr_writeTaskHandle = osThreadCreate(osThread(defuseKitMgr_writeTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -111,22 +123,49 @@ void MX_FREERTOS_Init(void) {
 
 }
 
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_dkm_readTask */
 /**
-  * @brief  Function implementing the defaultTask thread.
-  * @param  argument: Not used
-  * @retval None
-  */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void const * argument)
+* @brief Function implementing the defuseKitMgr_readTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_dkm_readTask */
+void dkm_readTask(void const * argument)
 {
-  /* USER CODE BEGIN StartDefaultTask */
+  /* USER CODE BEGIN dkm_readTask */
   /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END StartDefaultTask */
+	defuseKitMgr_readTask();
+  /* USER CODE END dkm_readTask */
+}
+
+/* USER CODE BEGIN Header_dkm_mgrTask */
+/**
+* @brief Function implementing the defuseKitMgr_mgrTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_dkm_mgrTask */
+void dkm_mgrTask(void const * argument)
+{
+  /* USER CODE BEGIN dkm_mgrTask */
+  /* Infinite loop */
+	defuseKitMgr_mgrTask();
+  /* USER CODE END dkm_mgrTask */
+}
+
+/* USER CODE BEGIN Header_dkm_writeTask */
+/**
+* @brief Function implementing the defuseKitMgr_writeTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_dkm_writeTask */
+void dkm_writeTask(void const * argument)
+{
+  /* USER CODE BEGIN dkm_writeTask */
+  /* Infinite loop */
+	defuseKitMgr_writeTask();
+  /* USER CODE END dkm_writeTask */
 }
 
 /* Private application code --------------------------------------------------*/

@@ -15,9 +15,12 @@
 #ifndef FAN_HEADER
 #define FAN_HEADER
 #include "tim.h"
+#include "common.h"
 
 void fan_init(void);
 
-void fan_set_pwm(uint16_t pwm);
+void fan_set_pwm(uint32_t pwmpercentage);
+
+void fan_read_rpm(uint32_t* rpmspeed);
 
 #endif /*FAN_HEADER END*/

@@ -13,6 +13,7 @@
 #ifndef DEFUSEKITMGR_HEADER
 #define DEFUSEKITMGR_HEADER
 
+#include "cmsis_os.h"
 #include "main.h"
 #include "common.h"
 #include "battery.h"
@@ -22,11 +23,13 @@
 #include "led.h"
 #include "speaker.h"
 
+
 void defuseKitMgr_init(void);
 
 void defuseKitMgr_readTask(void);
+void defuseKitMgr_mgrTask(void);
 void defuseKitMgr_writeTask(void);
-void defuseKitMgr_managerTask(void);
+
 
 
 #endif /*DEFUSEKITMGR_HEADER END*/
