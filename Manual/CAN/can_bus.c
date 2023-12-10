@@ -35,7 +35,7 @@ void can_bus_init(void)
 	  HAL_CAN_Start(can_bus_handle);
 }
 
-void can_bus_read(uint8_t* can_bus_data)
+void can_bus_read(CanRxMessage* can_bus_data)
 {
 	HAL_CAN_GetRxMessage(can_bus_handle, CAN_RX_FIFO0, &canRxHeader, RxData);
 	if(RxData[0] != 0x00)
@@ -44,7 +44,7 @@ void can_bus_read(uint8_t* can_bus_data)
 	}
 }
 
-void can_bus_write(uint8_t* can_bus_data)
+void can_bus_write(CanTxMessage* can_bus_data)
 {
 	HAL_CAN_AddTxMessage(can_bus_handle, &canTxHeader, TxData, &TxMailbox);
 }

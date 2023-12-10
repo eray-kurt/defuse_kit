@@ -50,6 +50,8 @@
 osThreadId defuseKitMgr_readTaskHandle;
 osThreadId defuseKitMgr_mgrTaskHandle;
 osThreadId defuseKitMgr_writeTaskHandle;
+osSemaphoreId mgrTaskBinarySem01Handle;
+osSemaphoreId writeTaskBinarySem02Handle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -92,6 +94,15 @@ void MX_FREERTOS_Init(void) {
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
+  /* Create the semaphores(s) */
+  /* definition and creation of mgrTaskBinarySem01 */
+  osSemaphoreDef(mgrTaskBinarySem01);
+  mgrTaskBinarySem01Handle = osSemaphoreCreate(osSemaphore(mgrTaskBinarySem01), 1);
+
+  /* definition and creation of writeTaskBinarySem02 */
+  osSemaphoreDef(writeTaskBinarySem02);
+  writeTaskBinarySem02Handle = osSemaphoreCreate(osSemaphore(writeTaskBinarySem02), 1);
+
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
@@ -106,15 +117,15 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defuseKitMgr_readTask */
-  osThreadDef(defuseKitMgr_readTask, dkm_readTask, osPriorityRealtime, 0, 128);
+  osThreadDef(defuseKitMgr_readTask, dkm_readTask, osPriorityBelowNormal, 0, 128);
   defuseKitMgr_readTaskHandle = osThreadCreate(osThread(defuseKitMgr_readTask), NULL);
 
   /* definition and creation of defuseKitMgr_mgrTask */
-  osThreadDef(defuseKitMgr_mgrTask, dkm_mgrTask, osPriorityNormal, 0, 128);
+  osThreadDef(defuseKitMgr_mgrTask, dkm_mgrTask, osPriorityAboveNormal, 0, 128);
   defuseKitMgr_mgrTaskHandle = osThreadCreate(osThread(defuseKitMgr_mgrTask), NULL);
 
   /* definition and creation of defuseKitMgr_writeTask */
-  osThreadDef(defuseKitMgr_writeTask, dkm_writeTask, osPriorityLow, 0, 128);
+  osThreadDef(defuseKitMgr_writeTask, dkm_writeTask, osPriorityNormal, 0, 128);
   defuseKitMgr_writeTaskHandle = osThreadCreate(osThread(defuseKitMgr_writeTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */

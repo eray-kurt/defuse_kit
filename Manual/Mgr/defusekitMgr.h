@@ -14,7 +14,7 @@
 #define DEFUSEKITMGR_HEADER
 
 #include <string.h>
-
+#include <stdio.h>
 #include "cmsis_os.h"
 #include "main.h"
 #include "common.h"
@@ -25,6 +25,25 @@
 #include "led.h"
 #include "speaker.h"
 
+
+typedef struct defuseKitState
+{
+	ModuleStatus powerStatus;
+	ModuleStatus fanStatus;
+	ModuleStatus soundStatus;
+	ModuleStatus lampStatus;
+	ModuleStatus turboFanStatus;
+	ModuleStatus demisterStatus;
+	ModuleStatus batteryStatus;
+}defuseKitState;
+
+typedef struct defuseKitMgr
+{
+	CanTxMessage canTxMessage;
+	CanRxMessage canRxMessage;
+	float batteryLevel;
+	defuseKitState state;
+}defuseKitMgr;
 
 void defuseKitMgr_init(void);
 
