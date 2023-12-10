@@ -11,6 +11,8 @@
   ******************************************************************************
   */
 #include "defuseKitMgr.h"
+uint8_t cbTx[8]; /*canbus tx*/
+uint8_t cbRx[8]; /*canbus rx*/
 
 void defuseKitMgr_init(void)
 {
@@ -22,6 +24,8 @@ void defuseKitMgr_init(void)
 	led_init();
 	speaker_init();
 	/*TODO set default values or get them from flash*/
+	memset(cbTx, 0, 8);
+	memset(cbRx, 0, 8);
 	/*TODO start the tasks*/
 }
 
@@ -31,6 +35,7 @@ void defuseKitMgr_readTask(void)
 	for(;;)
 	{
 		/*TODO read from CAN bus and set variables*/
+		can_bus_read(cbRx);
 		osDelay(1);
 	}
 }
@@ -46,11 +51,12 @@ void defuseKitMgr_mgrTask(void)
 
 void defuseKitMgr_writeTask(void)
 {
-	int i = 0;
-	uint32_t rpmspeed = 0;
+
 	for(;;)
 	{
 		/*TODO read variables and write to CAN bus & others*/
+		can_bus_write(cbTx);
+		osDelay(1);
 	}
 }
 

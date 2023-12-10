@@ -13,6 +13,8 @@
 #ifndef DEFUSEKITMGR_HEADER
 #define DEFUSEKITMGR_HEADER
 
+#include <string.h>
+
 #include "cmsis_os.h"
 #include "main.h"
 #include "common.h"
