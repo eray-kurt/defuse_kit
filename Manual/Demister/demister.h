@@ -17,8 +17,11 @@
 
 #include "gpio.h"
 #include "main.h"
+#include "common.h"
 
 void demister_init(void);
+void demister_process(defuseKitMgr* self);
+void demister_toggle(void);
 void demister_open(void);
 void demister_close(void);
 #endif /*DEMISTER_HEADER END*/

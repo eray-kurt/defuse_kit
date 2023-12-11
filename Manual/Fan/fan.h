@@ -18,9 +18,8 @@
 #include "common.h"
 
 void fan_init(void);
-
+void fan_process(defuseKitMgr* self);
 void fan_set_pwm(uint32_t pwmpercentage);
-
 void fan_read_rpm(uint32_t* rpmspeed);
 
 #endif /*FAN_HEADER END*/

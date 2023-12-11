@@ -18,13 +18,28 @@
 #define TRUE 			1
 #define FALSE			0
 
-#define FAN_LOW_POWER 10
-#define FAN_HIGH_POWER 70
-#define FAN_PERCENTAGE_MULTIPLIER 10
+#define HIGH			1
+#define LOW				0
 
+
+#define	BATTERY_FULL 					13.0
+#define BATTERY_PERCENT90 				10.7
+#define	BATTERY_PERCENT80 				10.4
+#define	BATTERY_PERCENT70 				10.1
+#define	BATTERY_PERCENT60 				9.8
+#define	BATTERY_PERCENT50 				9.5
+#define	BATTERY_PERCENT40 				9.2
+#define	BATTERY_PERCENT30 				8.9
+#define	BATTERY_PERCENT20 				8.6
+#define	BATTERY_PERCENT10 				8.3
+
+#define FAN_STEP						10
+#define FAN_UPPER_DEFAULT				60
+#define FAN_LOWER_DEFAULT				10
+#define FAN_TURBO						90
 
 /*CAN TX MESSAGE STRUCT*/
-typedef struct CanTxMessage
+typedef struct CanRxMessage
 {
 	/*byte 0*/
 	uint8_t powerButtonState 	: 1;
@@ -36,12 +51,12 @@ typedef struct CanTxMessage
 	uint8_t turboButtonState 	: 1;
 	uint8_t demisterButtonState : 1;
 
-	/*byte 1 - 8 */
+	/*byte 1 - 7 */
 	uint8_t padding[7];
-} CanTxMessage;
+} CanRxMessage;
 
 /*CAN RX MESSAGE STRUCT*/
-typedef struct CanRxMessage
+typedef struct CanTxMessage
 {
 	/*byte 0*/
 	uint8_t padding0 : 8;
@@ -59,27 +74,56 @@ typedef struct CanRxMessage
 	uint8_t faultLedPin 		: 1;
 
 	/*byte 3*/
-	uint8_t padding2[5];
-} CanRxMessage;
+	uint8_t padding2;
+
+	/*byte 4*/
+	uint8_t LED_BAR1_Pin 		: 1;
+	uint8_t LED_BAR2_Pin 		: 1;
+	uint8_t LED_BAR3_Pin 		: 1;
+	uint8_t LED_BAR4_Pin 		: 1;
+	uint8_t LED_BAR5_Pin 		: 1;
+	uint8_t LED_BAR6_Pin 		: 1;
+	uint8_t LED_BAR7_Pin 		: 1;
+	uint8_t LED_BAR8_Pin 		: 1;
+
+	/*byte 5*/
+	uint8_t LED_BAR9_Pin 		: 1;
+	uint8_t LED_BAR10_Pin 		: 1;
+	uint8_t padding3	 		: 6;
+
+	/*byte 6 - 7*/
+	uint8_t padding4[2];
+} CanTxMessage;
 
 typedef enum ModuleStatus
 {
 	OFF = 0,
 	ON = 1,
-	MODULE_ERROR = 2,
+	FAULT = 2,
 } ModuleStatus;
 
 
-#define	BATTERY_FULL 					13.0
-#define BATTERY_PERCENT90 				10.7
-#define	BATTERY_PERCENT80 				10.4
-#define	BATTERY_PERCENT70 				10.1
-#define	BATTERY_PERCENT60 				9.8
-#define	BATTERY_PERCENT50 				9.5
-#define	BATTERY_PERCENT40 				9.2
-#define	BATTERY_PERCENT30 				8.9
-#define	BATTERY_PERCENT20 				8.6
-#define	BATTERY_PERCENT10 				8.3
+typedef struct defuseKitStatus
+{
+	ModuleStatus powerStatus;
+	ModuleStatus batteryStatus;
+	ModuleStatus fanStatus;
+	ModuleStatus turboFanStatus;
+	ModuleStatus lampStatus;
+	ModuleStatus soundStatus;
+	ModuleStatus demisterStatus;
+
+}defuseKitStatus;
+
+typedef struct defuseKitMgr
+{
+	CanTxMessage canTxMessage;
+	CanRxMessage canRxMessage;
+	float batteryLevel;
+	uint8_t fanUpperLimit;
+	uint8_t fanLowerLimit;
+	defuseKitStatus status;
+}defuseKitMgr;
 
 
 #endif /*COMMON_HEADER END*/

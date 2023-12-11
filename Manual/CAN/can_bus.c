@@ -15,8 +15,6 @@
 CAN_TxHeaderTypeDef canTxHeader;
 CAN_RxHeaderTypeDef canRxHeader;
 
-uint8_t TxData[8];
-uint8_t RxData[8];
 uint32_t TxMailbox;
 CAN_HandleTypeDef* can_bus_handle = &hcan; /*handler for can bus to use in functions*/
 void can_bus_init(void)
@@ -30,23 +28,19 @@ void can_bus_init(void)
 	  canTxHeader.RTR = CAN_RTR_DATA;
 	  canTxHeader.StdId = CAN_TX_ID; /*0x103*/
 	  canTxHeader.TransmitGlobalTime = DISABLE;
-	  TxData[0] = 0x01;
 
 	  HAL_CAN_Start(can_bus_handle);
 }
 
 void can_bus_read(CanRxMessage* can_bus_data)
 {
-	HAL_CAN_GetRxMessage(can_bus_handle, CAN_RX_FIFO0, &canRxHeader, RxData);
-	if(RxData[0] != 0x00)
-	{
-		printf("debugpoint\n");
-	}
+	HAL_CAN_GetRxMessage(can_bus_handle, CAN_RX_FIFO0, &canRxHeader, (uint8_t*)can_bus_data);
+
 }
 
 void can_bus_write(CanTxMessage* can_bus_data)
 {
-	HAL_CAN_AddTxMessage(can_bus_handle, &canTxHeader, TxData, &TxMailbox);
+	HAL_CAN_AddTxMessage(can_bus_handle, &canTxHeader, (uint8_t*)can_bus_data, &TxMailbox);
 }
 
 /*TODO create write and read functions*/

@@ -33,6 +33,23 @@ void battery_init(void)
 	sBatteryUpsConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
 }
 
+void battery_process(defuseKitMgr* self)
+{
+	self->batteryLevel = battery_voltage_read();
+
+	self->canTxMessage.LED_BAR10_Pin = (self->batteryLevel > BATTERY_PERCENT90 && self->batteryLevel <= BATTERY_FULL) ? HIGH : LOW;
+	self->canTxMessage.LED_BAR9_Pin = (self->batteryLevel > BATTERY_PERCENT80 && self->batteryLevel <= BATTERY_PERCENT90) ? HIGH : LOW;
+	self->canTxMessage.LED_BAR8_Pin = (self->batteryLevel > BATTERY_PERCENT70 && self->batteryLevel <= BATTERY_PERCENT80) ? HIGH : LOW;
+	self->canTxMessage.LED_BAR7_Pin = (self->batteryLevel > BATTERY_PERCENT60 && self->batteryLevel <= BATTERY_PERCENT70) ? HIGH : LOW;
+	self->canTxMessage.LED_BAR6_Pin = (self->batteryLevel > BATTERY_PERCENT50 && self->batteryLevel <= BATTERY_PERCENT60) ? HIGH : LOW;
+	self->canTxMessage.LED_BAR5_Pin = (self->batteryLevel > BATTERY_PERCENT40 && self->batteryLevel <= BATTERY_PERCENT50) ? HIGH : LOW;
+	self->canTxMessage.LED_BAR4_Pin = (self->batteryLevel > BATTERY_PERCENT30 && self->batteryLevel <= BATTERY_PERCENT40) ? HIGH : LOW;
+	self->canTxMessage.LED_BAR3_Pin = (self->batteryLevel > BATTERY_PERCENT20 && self->batteryLevel <= BATTERY_PERCENT30) ? HIGH : LOW;
+	self->canTxMessage.LED_BAR2_Pin = (self->batteryLevel > BATTERY_PERCENT10 && self->batteryLevel <= BATTERY_PERCENT20) ? HIGH : LOW;
+	self->canTxMessage.LED_BAR1_Pin = (self->batteryLevel <= BATTERY_PERCENT10) ? HIGH : LOW;
+	self->status.batteryStatus = (self->batteryLevel <= BATTERY_PERCENT30) ? FAULT : ON;
+}
+
 float battery_voltage_read(void)
 {
 	float batteryVoltage = 0.0;
@@ -58,10 +75,7 @@ float ops_battery_read(void)
 {
 	float batteryOpsValue = 0.0;
 
-	if (HAL_ADC_ConfigChannel(batteryAdcHandler, &sBatteryOpsConfig) != HAL_OK)
-	{
-		Error_Handler();
-	}
+	HAL_ADC_ConfigChannel(batteryAdcHandler, &sBatteryOpsConfig);
 	HAL_ADC_Start(batteryAdcHandler);
 	HAL_ADC_PollForConversion(batteryAdcHandler, 1);
 	batteryOpsValue = HAL_ADC_GetValue(batteryAdcHandler);
@@ -75,10 +89,7 @@ float ups_battery_read(void)
 {
 	float batteryUpsValue = 0.0;
 
-	if (HAL_ADC_ConfigChannel(batteryAdcHandler, &sBatteryUpsConfig) != HAL_OK)
-	{
-		Error_Handler();
-	}
+	HAL_ADC_ConfigChannel(batteryAdcHandler, &sBatteryUpsConfig);
 	HAL_ADC_Start(batteryAdcHandler);
 	HAL_ADC_PollForConversion(batteryAdcHandler, 1);
 	batteryUpsValue = HAL_ADC_GetValue(batteryAdcHandler);

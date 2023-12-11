@@ -14,15 +14,15 @@
 #ifndef BATTERY_HEADER
 #define BATTERY_HEADER
 #include "adc.h"
+#include "common.h"
 
 /*ADC_HandleTypeDef* batteryOps = &hadc1;*/
 
 void battery_init(void);
+void battery_process(defuseKitMgr* self);
 
 float battery_voltage_read(void);
-
 float ops_battery_read(void);
-
 float ups_battery_read(void);
 
 #endif /*BATTERY_HEADER END*/

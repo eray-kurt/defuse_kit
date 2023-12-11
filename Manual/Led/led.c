@@ -12,9 +12,14 @@
   ******************************************************************************
   */
 #include "led.h"
-uint32_t* LED_1_REGISTER = &TIM1->CCR3;
-uint32_t* LED_2_REGISTER = &TIM1->CCR4;
+#define LED_1_REGISTER  &TIM1->CCR3
+#define LED_2_REGISTER  &TIM1->CCR4
 void led_init(void)
+{
+
+}
+
+void led_process(defuseKitMgr* self)
 {
 
 }

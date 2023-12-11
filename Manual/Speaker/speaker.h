@@ -14,7 +14,8 @@
 #ifndef SPEAKER_HEADER
 #define SPEAKER_HEADER
 #include "spi.h"
+#include "common.h"
 
 void speaker_init(void);
-
+void speaker_process(defuseKitMgr* self);
 #endif /*SPEAKER_HEADER END*/

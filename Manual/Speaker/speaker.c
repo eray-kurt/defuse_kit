@@ -18,3 +18,8 @@ void speaker_init(void)
 {
 
 }
+
+void speaker_process(defuseKitMgr* self)
+{
+
+}

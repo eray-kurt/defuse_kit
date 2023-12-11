@@ -26,31 +26,12 @@
 #include "speaker.h"
 
 
-typedef struct defuseKitState
-{
-	ModuleStatus powerStatus;
-	ModuleStatus fanStatus;
-	ModuleStatus soundStatus;
-	ModuleStatus lampStatus;
-	ModuleStatus turboFanStatus;
-	ModuleStatus demisterStatus;
-	ModuleStatus batteryStatus;
-}defuseKitState;
-
-typedef struct defuseKitMgr
-{
-	CanTxMessage canTxMessage;
-	CanRxMessage canRxMessage;
-	float batteryLevel;
-	defuseKitState state;
-}defuseKitMgr;
-
 void defuseKitMgr_init(void);
 
 void defuseKitMgr_readTask(void);
 void defuseKitMgr_mgrTask(void);
 void defuseKitMgr_writeTask(void);
 
-
+void powerStatus_process(void);
 
 #endif /*DEFUSEKITMGR_HEADER END*/

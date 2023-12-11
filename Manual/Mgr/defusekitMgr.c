@@ -11,10 +11,6 @@
   ******************************************************************************
   */
 #include "defuseKitMgr.h"
-uint8_t cbTx[8]; /*canbus tx*/
-uint8_t cbRx[8]; /*canbus rx*/
-
-
 defuseKitMgr self;
 
 void defuseKitMgr_init(void)
@@ -27,12 +23,21 @@ void defuseKitMgr_init(void)
 	led_init();
 	speaker_init();
 	/*TODO set default values or get them from flash*/
-	memset(cbTx, 0, 8);
-	memset(cbRx, 0, 8);
+	self.status.powerStatus = OFF;
+	self.status.batteryStatus = OFF;
+	self.status.fanStatus = OFF;
+	self.status.turboFanStatus = OFF;
+	self.status.lampStatus = OFF;
+	self.status.soundStatus = OFF;
+	self.status.demisterStatus = OFF;
 
-	int a = sizeof(self.canTxMessage);
+	self.batteryLevel = BATTERY_FULL;
+	self.fanLowerLimit = FAN_LOWER_DEFAULT;
+	self.fanUpperLimit = FAN_UPPER_DEFAULT;
+
+	/*int a = sizeof(self.canTxMessage);
 	int b = sizeof(self.canRxMessage);
-	int c = sizeof(self);
+	int c = sizeof(self);*/
 	/*TODO start the tasks*/
 }
 
@@ -52,6 +57,16 @@ void defuseKitMgr_mgrTask(void)
 	for(;;)
 	{
 		/*TODO manage states and variables*/
+		powerStatus_process();
+		if(self.status.powerStatus == ON)
+		{
+			battery_process(&self);
+			demister_process(&self);
+			fan_process(&self);
+			led_process(&self);
+			speaker_process(&self);
+		}
+
 		osDelay(1);
 	}
 }
@@ -67,5 +82,16 @@ void defuseKitMgr_writeTask(void)
 	}
 }
 
+void powerStatus_process(void)
+{
+	static uint8_t prevPowerButtonState = LOW;
+	static uint8_t currentPowerButtonState = LOW;
+	currentPowerButtonState = self.canRxMessage.powerButtonState;
+	if(currentPowerButtonState != prevPowerButtonState && currentPowerButtonState == HIGH)
+	{
+		self.status.powerStatus = !self.status.powerStatus;
+	}
+	prevPowerButtonState = currentPowerButtonState;
+}
 
 /*NOTE: this structure can be changed, let it settle for now 04.12*/

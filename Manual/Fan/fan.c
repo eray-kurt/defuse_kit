@@ -13,18 +13,27 @@
   */
 
 #include "fan.h"
-#define FAN_1_REGISTER TIM1->CCR1
-#define FAN_2_REGISTER TIM1->CCR2
+#define FAN_1_REGISTER 				TIM1->CCR1
+#define FAN_2_REGISTER 				TIM1->CCR2
+#define FAN_OUTPUT_TIMER			htim1
+#define FAN_RPM_TIMER				htim3
+#define FAN_PERCENTAGE_MULTIPLIER	10
 /*extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim3;*/
 void fan_init(void)
 {
-	  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-	  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-	  HAL_TIM_IC_Start(&htim3, TIM_CHANNEL_1);
-	  HAL_TIM_IC_Start(&htim3, TIM_CHANNEL_2);
+	  HAL_TIM_PWM_Start(&FAN_OUTPUT_TIMER, TIM_CHANNEL_1);
+	  HAL_TIM_PWM_Start(&FAN_OUTPUT_TIMER, TIM_CHANNEL_2);
+	  HAL_TIM_IC_Start(&FAN_RPM_TIMER, TIM_CHANNEL_1);
+	  HAL_TIM_IC_Start(&FAN_RPM_TIMER, TIM_CHANNEL_2);
 	/*No Timer Init Timer has inited at main*/
 }
+
+void fan_process(defuseKitMgr* self)
+{
+
+}
+
 
 void fan_set_pwm(uint32_t pwmpercentage)
 {
