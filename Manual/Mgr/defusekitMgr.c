@@ -23,6 +23,10 @@ void defuseKitMgr_init(void)
 	led_init();
 	speaker_init();
 	/*TODO set default values or get them from flash*/
+
+	memset(&self.canRxMessage, 0, sizeof(self.canRxMessage));
+	memset(&self.canTxMessage, 0, sizeof(self.canTxMessage));
+
 	self.status.powerStatus = OFF;
 	self.status.batteryStatus = OFF;
 	self.status.fanStatus = OFF;
@@ -32,8 +36,17 @@ void defuseKitMgr_init(void)
 	self.status.demisterStatus = OFF;
 
 	self.batteryLevel = BATTERY_FULL;
-	self.fanLowerLimit = FAN_LOWER_DEFAULT;
-	self.fanUpperLimit = FAN_UPPER_DEFAULT;
+
+	self.fanMgr.fanLowerLimit = FAN_LOWER_DEFAULT;
+	self.fanMgr.fanUpperLimit = FAN_UPPER_DEFAULT;
+	self.fanMgr.fanLevel = FAN_LOWER_DEFAULT;
+	self.fanMgr.turboLevel = FAN_TURBO_DEFAULT;
+
+	self.ledMgr.ledLowerLimit = LED_LOWER_DEFAULT;
+	self.ledMgr.ledUpperLimit = LED_UPPER_DEFAULT;
+	self.ledMgr.ledLevel = LED_LOWER_DEFAULT;
+
+	/*TODO add sound defaults*/
 
 	/*int a = sizeof(self.canTxMessage);
 	int b = sizeof(self.canRxMessage);
@@ -65,6 +78,7 @@ void defuseKitMgr_mgrTask(void)
 			fan_process(&self);
 			led_process(&self);
 			speaker_process(&self);
+			faultStatus_process();
 		}
 
 		osDelay(1);
@@ -90,8 +104,21 @@ void powerStatus_process(void)
 	if(currentPowerButtonState != prevPowerButtonState && currentPowerButtonState == HIGH)
 	{
 		self.status.powerStatus = !self.status.powerStatus;
+		self.canTxMessage.powerLedPin = !self.canTxMessage.powerLedPin;
+		if(self.canTxMessage.powerLedPin == LOW)
+		{
+			memset(&self.canTxMessage, 0, sizeof(self.canTxMessage));
+		}
 	}
 	prevPowerButtonState = currentPowerButtonState;
+}
+
+void faultStatus_process(void)
+{
+	if(self.status.batteryStatus == FAULT)
+	{
+		self.canTxMessage.faultLedPin = HIGH;
+	}
 }
 
 /*NOTE: this structure can be changed, let it settle for now 04.12*/

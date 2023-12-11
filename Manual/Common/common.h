@@ -33,10 +33,23 @@
 #define	BATTERY_PERCENT20 				8.6
 #define	BATTERY_PERCENT10 				8.3
 
+#define FAN_MAX							100
+#define FAN_MIN							0
 #define FAN_STEP						10
 #define FAN_UPPER_DEFAULT				60
 #define FAN_LOWER_DEFAULT				10
-#define FAN_TURBO						90
+#define FAN_TURBO_DEFAULT				90
+
+#define LED_STEP						10
+#define LED_UPPER_DEFAULT				100
+#define LED_LOWER_DEFAULT				0
+
+typedef enum ModuleStatus
+{
+	OFF = 0,
+	ON = 1,
+	FAULT = 2,
+} ModuleStatus;
 
 /*CAN TX MESSAGE STRUCT*/
 typedef struct CanRxMessage
@@ -95,12 +108,28 @@ typedef struct CanTxMessage
 	uint8_t padding4[2];
 } CanTxMessage;
 
-typedef enum ModuleStatus
+typedef struct fanMgr
 {
-	OFF = 0,
-	ON = 1,
-	FAULT = 2,
-} ModuleStatus;
+	uint8_t fanUpperLimit;
+	uint8_t fanLevel;
+	uint8_t fanLowerLimit;
+	uint8_t turboLevel;
+}fanMgr;
+
+typedef struct soundMgr
+{
+	uint8_t soundUpperLimit;
+	uint8_t soundLevel;
+	uint8_t soundLowerLimit;
+}soundMgr;
+
+typedef struct ledMgr
+{
+	uint8_t ledUpperLimit;
+	uint8_t ledLevel;
+	uint8_t ledLowerLimit;
+}ledMgr;
+
 
 
 typedef struct defuseKitStatus
@@ -120,8 +149,9 @@ typedef struct defuseKitMgr
 	CanTxMessage canTxMessage;
 	CanRxMessage canRxMessage;
 	float batteryLevel;
-	uint8_t fanUpperLimit;
-	uint8_t fanLowerLimit;
+	fanMgr fanMgr;
+	ledMgr ledMgr;
+	soundMgr soundMgr;
 	defuseKitStatus status;
 }defuseKitMgr;
 

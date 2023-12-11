@@ -33,5 +33,6 @@ void defuseKitMgr_mgrTask(void);
 void defuseKitMgr_writeTask(void);
 
 void powerStatus_process(void);
+void faultStatus_process(void);
 
 #endif /*DEFUSEKITMGR_HEADER END*/
