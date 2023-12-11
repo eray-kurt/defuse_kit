@@ -51,6 +51,13 @@ typedef enum ModuleStatus
 	FAULT = 2,
 } ModuleStatus;
 
+typedef enum ActiveModule
+{
+	FAN = 0,
+	TURBO = 1,
+	LED = 2,
+	SOUND = 3,
+}ActiveModule;
 /*CAN TX MESSAGE STRUCT*/
 typedef struct CanRxMessage
 {
@@ -141,6 +148,7 @@ typedef struct defuseKitStatus
 	ModuleStatus lampStatus;
 	ModuleStatus soundStatus;
 	ModuleStatus demisterStatus;
+	ActiveModule lastActiveModule;
 
 }defuseKitStatus;
 
