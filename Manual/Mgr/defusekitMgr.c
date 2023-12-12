@@ -12,6 +12,8 @@
   */
 #include "defuseKitMgr.h"
 defuseKitMgr self;
+extern osSemaphoreId mgrTaskBinarySem01Handle;
+extern osSemaphoreId writeTaskBinarySem02Handle;
 
 void defuseKitMgr_init(void)
 {
@@ -61,7 +63,10 @@ void defuseKitMgr_readTask(void)
 	{
 		/*TODO read from CAN bus and set variables*/
 		can_bus_read(&self.canRxMessage);
+		osSemaphoreRelease(mgrTaskBinarySem01Handle);
+		osThreadYield();
 		osDelay(1);
+
 	}
 }
 
@@ -70,6 +75,7 @@ void defuseKitMgr_mgrTask(void)
 	for(;;)
 	{
 		/*TODO manage states and variables*/
+		osSemaphoreWait(mgrTaskBinarySem01Handle, osWaitForever);
 		powerStatus_process();
 		if(self.status.powerStatus == ON)
 		{
@@ -83,8 +89,8 @@ void defuseKitMgr_mgrTask(void)
 			speaker_process(&self);
 			faultStatus_process();
 		}
-
-		osDelay(1);
+		osSemaphoreRelease(writeTaskBinarySem02Handle);
+		osThreadYield();
 	}
 }
 
@@ -94,8 +100,9 @@ void defuseKitMgr_writeTask(void)
 	for(;;)
 	{
 		/*TODO read variables and write to CAN bus & others*/
+		osSemaphoreWait(writeTaskBinarySem02Handle, osWaitForever);
 		can_bus_write(&self.canTxMessage);
-		osDelay(1);
+		osThreadYield();
 	}
 }
 
