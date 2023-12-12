@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file           : common.h
-  * @brief          : Header file of common definitions and types
+  * @brief          : Header file of common definitions, types and functions
   ******************************************************************************
   * @attention
   *
@@ -40,9 +40,9 @@
 #define FAN_LOWER_DEFAULT				10
 #define FAN_TURBO_DEFAULT				90
 
-#define LED_STEP						10
-#define LED_UPPER_DEFAULT				100
-#define LED_LOWER_DEFAULT				0
+#define LAMP_STEP						10
+#define LAMP_UPPER_DEFAULT				100
+#define LAMP_LOWER_DEFAULT				0
 
 typedef enum ModuleStatus
 {
@@ -53,12 +53,13 @@ typedef enum ModuleStatus
 
 typedef enum ActiveModule
 {
-	FAN = 0,
-	TURBO = 1,
-	LED = 2,
-	SOUND = 3,
+	NONE = 0,
+	FAN = 1,
+	TURBO = 2,
+	LAMP = 3,
+	SOUND = 4,
 }ActiveModule;
-/*CAN TX MESSAGE STRUCT*/
+/*CAN RX MESSAGE STRUCT*/
 typedef struct CanRxMessage
 {
 	/*byte 0*/
@@ -75,7 +76,7 @@ typedef struct CanRxMessage
 	uint8_t padding[7];
 } CanRxMessage;
 
-/*CAN RX MESSAGE STRUCT*/
+/*CAN TX MESSAGE STRUCT*/
 typedef struct CanTxMessage
 {
 	/*byte 0*/
@@ -130,12 +131,12 @@ typedef struct soundMgr
 	uint8_t soundLowerLimit;
 }soundMgr;
 
-typedef struct ledMgr
+typedef struct lampMgr
 {
-	uint8_t ledUpperLimit;
-	uint8_t ledLevel;
-	uint8_t ledLowerLimit;
-}ledMgr;
+	uint8_t lampUpperLimit;
+	uint8_t lampLevel;
+	uint8_t lampLowerLimit;
+}lampMgr;
 
 
 
@@ -148,6 +149,8 @@ typedef struct defuseKitStatus
 	ModuleStatus lampStatus;
 	ModuleStatus soundStatus;
 	ModuleStatus demisterStatus;
+	ModuleStatus upButtonStatus;
+	ModuleStatus downButtonStatus;
 	ActiveModule lastActiveModule;
 
 }defuseKitStatus;
@@ -158,7 +161,7 @@ typedef struct defuseKitMgr
 	CanRxMessage canRxMessage;
 	float batteryLevel;
 	fanMgr fanMgr;
-	ledMgr ledMgr;
+	lampMgr lampMgr;
 	soundMgr soundMgr;
 	defuseKitStatus status;
 }defuseKitMgr;

@@ -26,14 +26,53 @@ void fan_init(void)
 	  HAL_TIM_PWM_Start(&FAN_OUTPUT_TIMER, TIM_CHANNEL_2);
 	  HAL_TIM_IC_Start(&FAN_RPM_TIMER, TIM_CHANNEL_1);
 	  HAL_TIM_IC_Start(&FAN_RPM_TIMER, TIM_CHANNEL_2);
+
+
 	/*No Timer Init Timer has inited at main*/
 }
 
 void fan_process(defuseKitMgr* self)
 {
-
+	static uint8_t prevFanButtonState = LOW;
+	static uint8_t currentFanButtonState = LOW;
+	currentFanButtonState = self->canRxMessage.fanButtonState;
+	if(prevFanButtonState != currentFanButtonState && currentFanButtonState == HIGH)
+	{
+		self->status.fanStatus = ON;
+		self->status.lastActiveModule = FAN;
+		self->canTxMessage.fanLedPin = HIGH;
+	}
+	if(self->status.lastActiveModule == FAN)
+	{
+		if(self->status.upButtonStatus == ON)
+		{
+			self->fanMgr.fanLevel = (self->fanMgr.fanLevel + FAN_STEP >= self->fanMgr.fanUpperLimit) ? self->fanMgr.fanUpperLimit : self->fanMgr.fanLevel + FAN_STEP;
+			self->status.upButtonStatus = OFF;
+		}
+		else if(self->status.downButtonStatus == ON)
+		{
+			self->fanMgr.fanLevel = (self->fanMgr.fanLevel - FAN_STEP <= self->fanMgr.fanLowerLimit) ? self->fanMgr.fanLowerLimit : self->fanMgr.fanLevel - FAN_STEP;
+			self->status.downButtonStatus = OFF;
+		}
+		fan_set_pwm(self->fanMgr.fanLevel);
+	}
+	prevFanButtonState = currentFanButtonState;
 }
 
+void turbo_process(defuseKitMgr* self)
+{
+	static uint8_t prevTurboButtonState = LOW;
+		static uint8_t currentTurboButtonState = LOW;
+		currentTurboButtonState = self->canRxMessage.fanButtonState;
+		if(prevTurboButtonState != currentTurboButtonState && currentTurboButtonState == HIGH)
+		{
+			self->status.turboFanStatus = ON;
+			self->status.lastActiveModule = TURBO;
+			self->canTxMessage.turboLedPin = HIGH;
+			fan_set_pwm(self->fanMgr.turboLevel);
+		}
+		prevTurboButtonState = currentTurboButtonState;
+}
 
 void fan_set_pwm(uint32_t pwmpercentage)
 {

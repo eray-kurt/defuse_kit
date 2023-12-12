@@ -22,8 +22,9 @@
 #include "can_bus.h"
 #include "demister.h"
 #include "fan.h"
-#include "led.h"
 #include "speaker.h"
+
+#include "lamp.h"
 
 
 void defuseKitMgr_init(void);
@@ -34,5 +35,6 @@ void defuseKitMgr_writeTask(void);
 
 void powerStatus_process(void);
 void faultStatus_process(void);
+int buttonstate_process(uint8_t buttonValue);
 
 #endif /*DEFUSEKITMGR_HEADER END*/

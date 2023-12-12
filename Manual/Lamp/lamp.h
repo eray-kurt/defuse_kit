@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
-  * @file           : led.h
-  * @brief          : Source file of led peripherals and functions
+  * @file           : lamp.h
+  * @brief          : Header file of lamp peripherals and functions
   * @peripherals	: TIM1-CH3(PA10) | TIM1-CH4(PA11)
   ******************************************************************************
   * @attention
@@ -11,20 +11,14 @@
   *
   ******************************************************************************
   */
-#include "led.h"
-#define LED_1_REGISTER  &TIM1->CCR3
-#define LED_2_REGISTER  &TIM1->CCR4
-void led_init(void)
-{
 
-}
+#ifndef LED_HEADER
+#define LED_HEADER
+#include "tim.h"
+#include "common.h"
 
-void led_process(defuseKitMgr* self)
-{
+void lamp_init();
+void lamp_process(defuseKitMgr* self);
+void lamp_set_pwm(uint16_t pwm);
 
-}
-
-void led_set_pwm(uint16_t pwm)
-{
-
-}
+#endif /*LED_HEADER END*/
