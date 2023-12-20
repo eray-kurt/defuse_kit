@@ -89,6 +89,7 @@ void defuseKitMgr_mgrTask(void)
 			speaker_process(&self);
 			faultStatus_process();
 		}
+		speaker_process(&self);
 		osSemaphoreRelease(writeTaskBinarySem02Handle);
 		osThreadYield();
 	}

@@ -59,8 +59,6 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define DEMISTER_Pin GPIO_PIN_2
 #define DEMISTER_GPIO_Port GPIOB
-#define SPEAKER_Pin GPIO_PIN_12
-#define SPEAKER_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

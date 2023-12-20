@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file           : speaker.h
   * @brief          : Header file of speaker peripherals and functions
-  * @peripherals	: SPI (PB13, PB14, PB15) | GPIO (PB12)
+  * @peripherals	: SPI (PB12, PB13, PB14, PB15)
   ******************************************************************************
   * @attention
   *
